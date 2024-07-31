@@ -18,6 +18,8 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Button, Dimensions, View } from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import styles from './styles';
+import { CarPlay, MapTemplate } from 'react-native-carplay';
+
 import {
   type MapViewController,
   type NavigationViewController,
@@ -235,6 +237,27 @@ const NavigationScreen = () => {
     }
   }, [navigationController]);
 
+  useEffect(() => {
+    CarPlay.registerOnConnect(() => {
+      console.log('Carplay conneted!');
+      const template = new MapTemplate({
+        pane: {
+          items: [
+            {
+              text: 'Pane',
+              detailText: 'Detail Text',
+            },
+          ],
+        },
+        mapButtons: [],
+        component: MapView,
+      });
+
+      // Sets the root template for your car app.
+      CarPlay.setRootTemplate(template);
+    });
+  }, []);
+
   const onRecenterButtonClick = useCallback(() => {
     console.log('onRecenterButtonClick');
   }, []);
@@ -344,6 +367,32 @@ const NavigationScreen = () => {
     </View>
   ) : (
     <React.Fragment />
+  );
+};
+
+const MapView = () => {
+  return (
+    <View style={[styles.container]}>
+      <View style={[styles.map_container]}>
+        <NavigationView
+          width={800}
+          height={400}
+          androidStylingOptions={{
+            primaryDayModeThemeColor: '#34eba8',
+            headerDistanceValueTextColor: '#76b5c5',
+            headerInstructionsFirstRowTextSize: '20f',
+          }}
+          iOSStylingOptions={{
+            navigationHeaderPrimaryBackgroundColor: '#34eba8',
+            navigationHeaderDistanceValueTextColor: '#76b5c5',
+          }}
+          navigationViewCallbacks={undefined}
+          mapViewCallbacks={undefined}
+          onMapViewControllerCreated={() => {}}
+          onNavigationViewControllerCreated={() => {}}
+        />
+      </View>
+    </View>
   );
 };
 

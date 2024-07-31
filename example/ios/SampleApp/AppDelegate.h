@@ -17,5 +17,7 @@
 #import <UIKit/UIKit.h>
 
 @interface AppDelegate : RCTAppDelegate
-
+@property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, strong) RCTBridge *bridge;
+@property (nonatomic, strong) RCTRootView *rootView;
 @end

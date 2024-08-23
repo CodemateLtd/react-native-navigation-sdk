@@ -36,7 +36,7 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.google.android.libraries.geo.navcore.service.base.NavigationService;
 
-public class SampleAndroidAutoSession extends Session implements SampleAndroidAutoScreen.Listener {
+public class SampleAndroidAutoSession extends Session {
   static final String TAG = SampleAndroidAutoSession.class.getSimpleName();
 
   public SampleAndroidAutoSession(SessionInfo sessionInfo) {
@@ -116,10 +116,5 @@ public class SampleAndroidAutoSession extends Session implements SampleAndroidAu
     }
 
     return new SampleAndroidAutoScreen(getCarContext());
-  }
-
-  @Override
-  public void stopNavigation() {
-
   }
 }

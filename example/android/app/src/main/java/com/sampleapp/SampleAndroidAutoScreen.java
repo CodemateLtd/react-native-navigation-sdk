@@ -32,7 +32,6 @@ import androidx.car.app.SurfaceCallback;
 import androidx.car.app.SurfaceContainer;
 import androidx.car.app.model.Action;
 import androidx.car.app.model.ActionStrip;
-import androidx.car.app.model.CarIcon;
 import androidx.car.app.model.Distance;
 import androidx.car.app.model.Pane;
 import androidx.car.app.model.PaneTemplate;
@@ -42,7 +41,10 @@ import androidx.car.app.navigation.model.Maneuver;
 import androidx.car.app.navigation.model.NavigationTemplate;
 import androidx.car.app.navigation.model.RoutingInfo;
 import androidx.car.app.navigation.model.Step;
-import androidx.core.graphics.drawable.IconCompat;
+import androidx.lifecycle.DefaultLifecycleObserver;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -53,22 +55,36 @@ import com.google.android.libraries.mapsplatform.turnbyturn.model.NavInfo;
 import com.google.android.libraries.mapsplatform.turnbyturn.model.StepInfo;
 import com.google.android.libraries.navigation.NavigationViewForAuto;
 
+import com.google.android.libraries.navigation.StylingOptions;
+import com.google.android.react.navsdk.NavAutoModule;
+import com.google.android.react.navsdk.INavigationViewController;
+import com.google.android.react.navsdk.MapViewController;
 import com.google.android.react.navsdk.NavInfoReceivingService;
+import com.google.android.react.navsdk.NavModule;
 
-public class SampleAndroidAutoScreen extends Screen implements SurfaceCallback {
+public class SampleAndroidAutoScreen extends Screen implements SurfaceCallback, INavigationViewController {
   private static final String VIRTUAL_DISPLAY_NAME = "SampleAppNavScreen";
-  private NavigationViewForAuto navigationView;
-  private VirtualDisplay virtualDisplay;
-  private Presentation presentation;
-  private GoogleMap googleMap;
-  private boolean navigationInitialized = true;
-  private RoutingInfo currentRoutingInfo;
 
-  public interface Listener {
-    /**
-     * Stops navigation.
-     */
-    void stopNavigation();
+  private NavigationViewForAuto mNavigationView;
+  private VirtualDisplay mVirtualDisplay;
+  private Presentation mPresentation;
+  private GoogleMap mGoogleMap;
+  private boolean mNavigationInitialized = false;
+  private RoutingInfo mCurrentRoutingInfo;
+  private MapViewController mMapViewController;
+
+  private boolean mAndroidAutoModuleInitialized = false;
+  private boolean mNavModuleInitialized = false;
+  private final SampleAndroidAutoScreen screenInstance = this;
+
+  @Override
+  public void setStylingOptions(StylingOptions stylingOptions) {
+    // TODO(jokerttu): set styling to the navigationView
+  }
+
+  public void onNavigationReady(boolean ready) {
+    mNavigationInitialized = ready;
+    invalidate();
   }
 
   public SampleAndroidAutoScreen(
@@ -76,15 +92,49 @@ public class SampleAndroidAutoScreen extends Screen implements SurfaceCallback {
 
     super(carContext);
 
-//    NavModule.getInstance().registerNavigationReadyListener((boolean ready) -> {
-//      this.navigationInitialized = ready;
-//      invalidate();
-//    });
+    NavAutoModule.setModuleReadyListener(() -> {
+      mAndroidAutoModuleInitialized = true;
+      registerControllersForAndroidAutoModule();
+    });
+
+    NavModule.setModuleReadyListener(() -> {
+      mNavModuleInitialized = true;
+      NavModule.getInstance().registerNavigationReadyListener(this::onNavigationReady);
+    });
 
     carContext.getCarService(AppManager.class).setSurfaceCallback(this);
     NavInfoReceivingService.getNavInfoLiveData().observe(this, this::processNextStep);
+
+    Lifecycle lifecycle = getLifecycle();
+    lifecycle.addObserver(mLifeCycleObserver);
   }
 
+
+  private final LifecycleObserver mLifeCycleObserver =
+    new DefaultLifecycleObserver() {
+      @Override
+      public void onDestroy(@NonNull LifecycleOwner lifecycleOwner) {
+        if (mNavModuleInitialized) {
+          try {
+            NavModule.getInstance().unRegisterNavigationReadyListener(screenInstance::onNavigationReady);
+          } catch (Exception e) {}
+        }
+      }
+    };
+
+
+
+  private void registerControllersForAndroidAutoModule() {
+    if (mAndroidAutoModuleInitialized && mMapViewController != null) {
+      NavAutoModule.getInstance().androidAutoNavigationScreenInitialized(mMapViewController, this);
+    }
+  }
+
+  private void unRegisterControllersForAndroidAutoModule() {
+    if (mAndroidAutoModuleInitialized) {
+      NavAutoModule.getInstance().androidAutoNavigationScreenDisposed();
+    }
+  }
 
   private void processNextStep(NavInfo navInfo) {
     if (navInfo == null || navInfo.getCurrentStep() == null) {
@@ -99,7 +149,7 @@ public class SampleAndroidAutoScreen extends Screen implements SurfaceCallback {
     Step currentStep = buildStepFromStepInfo(navInfo.getCurrentStep());
     Distance distanceToStep = Distance.create(max(navInfo.getDistanceToCurrentStepMeters(),0), Distance.UNIT_METERS);
 
-    currentRoutingInfo =
+    mCurrentRoutingInfo =
       new RoutingInfo.Builder().setCurrentStep(currentStep, distanceToStep).build();
 
     // Invalidate the current template which leads to another onGetTemplate call.
@@ -107,29 +157,14 @@ public class SampleAndroidAutoScreen extends Screen implements SurfaceCallback {
   }
 
   private Step buildStepFromStepInfo(StepInfo stepInfo) {
-    //IconCompat maneuverIcon =
-    //  IconCompat.createWithBitmap(stepInfo.getManeuverBitmap());
     Maneuver.Builder
       maneuverBuilder = new Maneuver.Builder(
       stepInfo.getManeuver());
-    //CarIcon maneuverCarIcon = new CarIcon.Builder(maneuverIcon).build();
-    //maneuverBuilder.setIcon(maneuverCarIcon);
     Step.Builder stepBuilder =
       new Step.Builder()
         .setRoad(stepInfo.getFullRoadName())
         .setCue(stepInfo.getFullInstructionText())
         .setManeuver(maneuverBuilder.build());
-
-//    if (stepInfo.getLanes() != null
-//      && stepInfo.getLanesBitmap() != null) {
-//      for (Lane lane : buildAndroidAutoLanesFromStep(stepInfo)) {
-//        stepBuilder.addLane(lane);
-//      }
-//      IconCompat lanesIcon =
-//        IconCompat.createWithBitmap(stepInfo.getLanesBitmap());
-//      CarIcon lanesImage = new CarIcon.Builder(lanesIcon).build();
-//      stepBuilder.setLanesImage(lanesImage);
-//    }
     return stepBuilder.build();
   }
 
@@ -145,7 +180,7 @@ public class SampleAndroidAutoScreen extends Screen implements SurfaceCallback {
     if (!isSurfaceReady(surfaceContainer)) {
       return;
     }
-    virtualDisplay =
+    mVirtualDisplay =
       getCarContext()
         .getSystemService(DisplayManager.class)
         .createVirtualDisplay(
@@ -155,62 +190,67 @@ public class SampleAndroidAutoScreen extends Screen implements SurfaceCallback {
           surfaceContainer.getDpi(),
           surfaceContainer.getSurface(),
           DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY);
-    presentation = new Presentation(getCarContext(), virtualDisplay.getDisplay());
+    mPresentation = new Presentation(getCarContext(), mVirtualDisplay.getDisplay());
 
-    navigationView = new NavigationViewForAuto(getCarContext());
-    navigationView.onCreate(null);
-    navigationView.onStart();
-    navigationView.onResume();
+    mNavigationView = new NavigationViewForAuto(getCarContext());
+    mNavigationView.onCreate(null);
+    mNavigationView.onStart();
+    mNavigationView.onResume();
 
-    presentation.setContentView(navigationView);
-    presentation.show();
+    mPresentation.setContentView(mNavigationView);
+    mPresentation.show();
 
-    navigationView.getMapAsync((GoogleMap googleMap) -> {
-      this.googleMap = googleMap;
+    mNavigationView.getMapAsync((GoogleMap googleMap) -> {
+      mGoogleMap = googleMap;
+      mMapViewController = new MapViewController();
+      mMapViewController.initialize(googleMap, () -> null);
+      registerControllersForAndroidAutoModule();
       invalidate();
     });
   }
 
   @Override
   public void onSurfaceDestroyed(@NonNull SurfaceContainer surfaceContainer) {
-    navigationView.onPause();
-    navigationView.onStop();
-    navigationView.onDestroy();
+    unRegisterControllersForAndroidAutoModule();
+    mNavigationView.onPause();
+    mNavigationView.onStop();
+    mNavigationView.onDestroy();
+    mGoogleMap = null;
 
-    presentation.dismiss();
-    virtualDisplay.release();
+    mPresentation.dismiss();
+    mVirtualDisplay.release();
   }
 
 
   @Override
   public void onScroll(float distanceX, float distanceY) {
-    if (googleMap == null) {
+    if (mGoogleMap == null) {
       return;
     }
-    googleMap.moveCamera(CameraUpdateFactory.scrollBy(distanceX, distanceY));
+    mGoogleMap.moveCamera(CameraUpdateFactory.scrollBy(distanceX, distanceY));
   }
 
   @Override
   public void onScale(float focusX, float focusY, float scaleFactor) {
-    if (googleMap == null) {
+    if (mGoogleMap == null) {
       return;
     }
     CameraUpdate update =
       CameraUpdateFactory.zoomBy((scaleFactor - 1),
         new Point((int) focusX, (int) focusY));
-    googleMap.animateCamera(update); // map is set in onSurfaceAvailable.
+    mGoogleMap.animateCamera(update); // map is set in onSurfaceAvailable.
   }
 
   @NonNull
   @Override
   @SuppressLint("MissingPermission")
   public Template onGetTemplate() {
-    if (!navigationInitialized) {
+    if (!mNavigationInitialized) {
       return new PaneTemplate.Builder(
         new Pane.Builder().addRow(
           new Row.Builder()
             .setTitle("Nav SampleApp")
-            .addText("Initializing")
+            .addText("Initialize navigation to see navigation view on the Android Auto screen")
             .build()
         ).build()
       ).build();
@@ -222,9 +262,9 @@ public class SampleAndroidAutoScreen extends Screen implements SurfaceCallback {
             .setTitle("Re-center")
             .setOnClickListener(
               () -> {
-                if (googleMap == null)
+                if (mGoogleMap == null)
                   return;
-                googleMap.followMyLocation(GoogleMap.CameraPerspective.TILTED);
+                mGoogleMap.followMyLocation(GoogleMap.CameraPerspective.TILTED);
               }
             )
             .build()).addAction(
@@ -232,22 +272,22 @@ public class SampleAndroidAutoScreen extends Screen implements SurfaceCallback {
             .setTitle("Add circle")
             .setOnClickListener(
               () -> {
-                if (googleMap == null)
+                if (mGoogleMap == null)
                   return;
 
                 CircleOptions options = new CircleOptions();
                 options.strokeWidth(10);
                 options.radius(100000);
                 options.center(new LatLng(0, 0));
-                googleMap.addCircle(options);
+                mGoogleMap.addCircle(options);
               }
             )
             .build())
         .build())
       .setMapActionStrip(new ActionStrip.Builder().addAction(Action.PAN).build());
 
-    if (currentRoutingInfo != null) {
-      navigationTemplateBuilder.setNavigationInfo(currentRoutingInfo);
+    if (mCurrentRoutingInfo != null) {
+      navigationTemplateBuilder.setNavigationInfo(mCurrentRoutingInfo);
     }
 
     return navigationTemplateBuilder.build();

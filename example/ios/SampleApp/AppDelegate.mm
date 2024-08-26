@@ -17,22 +17,40 @@
 
 #import <GoogleMaps/GoogleMaps.h>
 #import <React/RCTBundleURLProvider.h>
+#import <CarPlay/CarPlay.h>
+#import <UIKit/UIKit.h>
+#import "CarSceneDelegate.h"
+#import "PhoneSceneDelegate.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application
-    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   self.moduleName = @"SampleApp";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
-  NSString *api_key =
-      [[NSBundle mainBundle] objectForInfoDictionaryKey:@"API_KEY"];
+  NSString *api_key = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"API_KEY"];
   [GMSServices provideAPIKey:api_key];
   [GMSServices setMetalRendererEnabled:YES];
-  return [super application:application
-      didFinishLaunchingWithOptions:launchOptions];
+  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+  self.rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName:self.moduleName initialProperties:nil];
+  return YES;
 }
+
+- (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options {
+  if ([connectingSceneSession.role isEqualToString:@"CPTemplateApplicationSceneSessionRoleApplication"]) {
+    UISceneConfiguration *scene = [[UISceneConfiguration alloc] initWithName:@"CarPlay" sessionRole:connectingSceneSession.role];
+    scene.delegateClass = [CarSceneDelegate class];
+    return scene;
+  } else {
+    UISceneConfiguration *scene = [[UISceneConfiguration alloc] initWithName:@"Phone" sessionRole:connectingSceneSession.role];
+    scene.delegateClass = [PhoneSceneDelegate class];
+    return scene;
+  }
+}
+
+- (void)application:(UIApplication *)application didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {}
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge {
   return [self bundleURL];

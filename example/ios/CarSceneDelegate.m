@@ -23,17 +23,16 @@
   self.interfaceController = interfaceController;
   self.carWindow = window;
 
-  // Create and present your CarPlay templates here
-  CPListItem *listItem = [[CPListItem alloc] initWithText:@"Item 1" detailText:@"Detail Text"];
-  CPListSection *section = [[CPListSection alloc] initWithItems:@[listItem]];
-  CPListTemplate *listTemplate = [[CPListTemplate alloc] initWithTitle:@"Example" sections:@[section]];
-
-  [self.interfaceController setRootTemplate:listTemplate animated:YES];
+  self.mapTemplate = [[CPMapTemplate alloc] init];
+  self.mapViewController = [[CarPlayViewController alloc] initWithWindow:_carWindow];
+  self.mapTemplate.mapDelegate = self.mapViewController;
+  self.carWindow.rootViewController = self.mapViewController;
+  [self.interfaceController setRootTemplate:self.mapTemplate animated:YES completion:nil];
 }
 
 - (void)templateApplicationScene:(CPTemplateApplicationScene *)templateApplicationScene
 didDisconnectInterfaceController:(CPInterfaceController *)interfaceController {
-
+  self.interfaceController = nil;
 }
 
 - (void)templateApplicationScene:(CPTemplateApplicationScene *)templateApplicationScene didBecomeActive:(CPTemplateApplicationScene *)scene {

@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#import <UIKit/UIKit.h>
+#import <GoogleMaps/GoogleMaps.h>
 #import <CarPlay/CarPlay.h>
-#import "CarPlayViewController.h"
 
-@interface CarSceneDelegate : UIResponder <CPTemplateApplicationSceneDelegate>
+NS_ASSUME_NONNULL_BEGIN
 
-@property (nonatomic, strong) CPInterfaceController *interfaceController;
-@property (nonatomic, strong) CPWindow *carWindow;
-@property (nonatomic, strong) CPMapTemplate *mapTemplate;
-@property (nonatomic, strong) CarPlayViewController *mapViewController;
-
+@interface CarPlayViewController : UIViewController <CPMapTemplateDelegate>
+@property (nonatomic, strong) CPWindow *window;
+@property (nonatomic, strong) GMSMapView *mapView;
+- (instancetype)initWithWindow:(CPWindow *)window;
 @end
+
+NS_ASSUME_NONNULL_END

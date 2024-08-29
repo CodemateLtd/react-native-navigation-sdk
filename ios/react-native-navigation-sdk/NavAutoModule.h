@@ -25,6 +25,7 @@ typedef void (^NavAutoModuleReadyCallback)(void);
 
 - (void)registerViewController:(NavViewController *)vc;
 + (void)registerNavAutoModuleReadyCallback:(NavAutoModuleReadyCallback)callback;
++ (void)unregisterNavAutoModuleReadyCallback;
 
 // Class method to access the singleton instance
 + (instancetype)sharedInstance;

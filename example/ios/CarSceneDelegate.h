@@ -22,5 +22,7 @@
 @property (nonatomic, strong) CPWindow *carWindow;
 @property (nonatomic, strong) CPMapTemplate *mapTemplate;
 @property (nonatomic, strong) NavViewController *navViewController;
+@property (nonatomic, assign) BOOL sessionAttached;
+@property (nonatomic, assign) BOOL viewcontrollerRegistered;
 
 @end

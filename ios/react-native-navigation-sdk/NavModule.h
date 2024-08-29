@@ -31,6 +31,7 @@ typedef void (^NavigationSessionReadyCallback)(void);
 
 - (BOOL)hasSession;
 - (GMSNavigationSession *)getSession;
++ (void)unregisterNavigationSessionReadyCallback;
 + (void)registerNavigationSessionReadyCallback:(NavigationSessionReadyCallback)callback;
 
 // Class method to access the singleton instance

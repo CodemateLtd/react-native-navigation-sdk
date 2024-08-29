@@ -123,6 +123,10 @@ RCT_EXPORT_MODULE(NavModule);
   _navigationSessionReadyCallback = [callback copy];
 }
 
++ (void)unregisterNavigationSessionReadyCallback {
+  _navigationSessionReadyCallback = nil;
+}
+
 - (void)showTermsAndConditionsDialog {
     BOOL showAwareness = _tosParams[@"showOnlyDisclaimer"] != nil &&
     [_tosParams[@"showOnlyDisclaimer"] boolValue];

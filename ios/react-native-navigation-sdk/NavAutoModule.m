@@ -47,6 +47,10 @@ static NavAutoModuleReadyCallback _navAutoModuleReadyCallback;
   _navAutoModuleReadyCallback = [callback copy];
 }
 
++ (void)unregisterNavAutoModuleReadyCallback {
+  _navAutoModuleReadyCallback = nil;
+}
+
 RCT_EXPORT_METHOD(addMarker
                   : (nonnull NSNumber *)reactTag markerOptions
                   : (NSDictionary *)markerOptions resolver

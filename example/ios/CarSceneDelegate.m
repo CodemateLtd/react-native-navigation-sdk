@@ -30,24 +30,43 @@
   self.carWindow.rootViewController = self.navViewController;
   [self.interfaceController setRootTemplate:self.mapTemplate animated:YES completion:nil];
   [NavModule registerNavigationSessionReadyCallback:^{
-    [self.navViewController attachToNavigationSession:[[NavModule sharedInstance] getSession]];
+    [self attachSession];
+    [NavModule unregisterNavigationSessionReadyCallback];
   }];
   [NavAutoModule registerNavAutoModuleReadyCallback:^{
-    [[NavAutoModule sharedInstance] registerViewController:self.navViewController];
+    [self registerViewController];
+    [NavAutoModule unregisterNavAutoModuleReadyCallback];
   }];
 }
 
 - (void)templateApplicationScene:(CPTemplateApplicationScene *)templateApplicationScene
 didDisconnectInterfaceController:(CPInterfaceController *)interfaceController {
   self.interfaceController = nil;
+  self.carWindow = nil;
+  self.mapTemplate = nil;
+  self.navViewController = nil;
+  self.viewcontrollerRegistered = NO;
+  self.sessionAttached = NO;
 }
 
 - (void)sceneDidBecomeActive:(UIScene *)scene {
-  [self.navViewController attachToNavigationSession:[[NavModule sharedInstance] getSession]];
-  [[NavAutoModule sharedInstance] registerViewController:self.navViewController];
+  [self attachSession];
+  [self registerViewController];
 }
 
-- (void)sceneWillResignActive:(UIScene *)scene {}
+- (void)attachSession {
+  if ([NavModule sharedInstance] != nil && !_sessionAttached) {
+    [self.navViewController attachToNavigationSession:[[NavModule sharedInstance] getSession]];
+    _sessionAttached = YES;
+  }
+}
+
+- (void)registerViewController {
+  if ([NavAutoModule sharedInstance] != nil && !_viewcontrollerRegistered) {
+    [[NavAutoModule sharedInstance] registerViewController:self.navViewController];
+    _viewcontrollerRegistered = YES;
+  }
+}
 
 
 @end

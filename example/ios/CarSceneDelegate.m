@@ -16,6 +16,8 @@
 #import <Foundation/Foundation.h>
 #import <CarPlay/CarPlay.h>
 #import "CarSceneDelegate.h"
+#import "NavModule.h"
+#import "NavAutoModule.h"
 
 @implementation CarSceneDelegate
 
@@ -24,10 +26,15 @@
   self.carWindow = window;
 
   self.mapTemplate = [[CPMapTemplate alloc] init];
-  self.mapViewController = [[CarPlayViewController alloc] initWithWindow:_carWindow];
-  self.mapTemplate.mapDelegate = self.mapViewController;
-  self.carWindow.rootViewController = self.mapViewController;
+  self.navViewController = [[NavViewController alloc] initWithSize:self.carWindow.frame.size.height width:self.carWindow.frame.size.width];
+  self.carWindow.rootViewController = self.navViewController;
   [self.interfaceController setRootTemplate:self.mapTemplate animated:YES completion:nil];
+  [NavModule registerNavigationSessionReadyCallback:^{
+    [self.navViewController attachToNavigationSession:[[NavModule sharedInstance] getSession]];
+  }];
+  [NavAutoModule registerNavAutoModuleReadyCallback:^{
+    [[NavAutoModule sharedInstance] registerViewController:self.navViewController];
+  }];
 }
 
 - (void)templateApplicationScene:(CPTemplateApplicationScene *)templateApplicationScene
@@ -35,13 +42,12 @@ didDisconnectInterfaceController:(CPInterfaceController *)interfaceController {
   self.interfaceController = nil;
 }
 
-- (void)templateApplicationScene:(CPTemplateApplicationScene *)templateApplicationScene didBecomeActive:(CPTemplateApplicationScene *)scene {
-  // Handle becoming active if necessary
+- (void)sceneDidBecomeActive:(UIScene *)scene {
+  [self.navViewController attachToNavigationSession:[[NavModule sharedInstance] getSession]];
+  [[NavAutoModule sharedInstance] registerViewController:self.navViewController];
 }
 
-- (void)templateApplicationScene:(CPTemplateApplicationScene *)templateApplicationScene willResignActive:(CPTemplateApplicationScene *)scene {
-  // Handle resigning active if necessary
-}
+- (void)sceneWillResignActive:(UIScene *)scene {}
 
 
 @end

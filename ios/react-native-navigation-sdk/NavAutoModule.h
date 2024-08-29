@@ -13,16 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#import <UIKit/UIKit.h>
-#import <GoogleMaps/GoogleMaps.h>
-#import <CarPlay/CarPlay.h>
+#import <React/RCTBridgeModule.h>
+#import "NavViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CarPlayViewController : UIViewController <CPMapTemplateDelegate>
-@property (nonatomic, strong) CPWindow *window;
-@property (nonatomic, strong) GMSMapView *mapView;
-- (instancetype)initWithWindow:(CPWindow *)window;
+@interface NavAutoModule : NSObject <RCTBridgeModule>
+@property (nonatomic, strong) NavViewController *viewController;
+
+typedef void (^NavAutoModuleReadyCallback)(void);
+
+- (void)registerViewController:(NavViewController *)vc;
++ (void)registerNavAutoModuleReadyCallback:(NavAutoModuleReadyCallback)callback;
+
+// Class method to access the singleton instance
++ (instancetype)sharedInstance;
+
 @end
 
 NS_ASSUME_NONNULL_END

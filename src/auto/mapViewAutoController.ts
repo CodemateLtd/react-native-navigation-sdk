@@ -96,7 +96,7 @@ export const getMapViewAutoController = (): MapViewController => {
 
     setScrollGesturesEnabledDuringRotateOrZoom: (_isOn: boolean) => {},
 
-    setZoomControlsEnabled: (_isOn: boolean) => {},
+    setZoomControlsEnabled: (_isOn: boolean) => {}, // TODO: What's this?
 
     setZoomLevel: (level: number) => {
       NavAutoModule.setZoomLevel(level);
@@ -124,6 +124,8 @@ export const getMapViewAutoController = (): MapViewController => {
       return await NavAutoModule.isMyLocationEnabled();
     },
 
-    moveCamera: (_cameraPosition: CameraPosition) => {},
+    moveCamera: (_cameraPosition: CameraPosition) => {
+      return NavAutoModule.moveCamera(_cameraPosition);
+    },
   };
 };

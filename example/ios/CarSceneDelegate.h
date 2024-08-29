@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 #import <CarPlay/CarPlay.h>
-#import "CarPlayViewController.h"
+#import "NavViewController.h"
 
 @interface CarSceneDelegate : UIResponder <CPTemplateApplicationSceneDelegate>
 
 @property (nonatomic, strong) CPInterfaceController *interfaceController;
 @property (nonatomic, strong) CPWindow *carWindow;
 @property (nonatomic, strong) CPMapTemplate *mapTemplate;
-@property (nonatomic, strong) CarPlayViewController *mapViewController;
+@property (nonatomic, strong) NavViewController *navViewController;
 
 @end

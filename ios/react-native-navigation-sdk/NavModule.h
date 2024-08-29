@@ -25,10 +25,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NavModule : NSObject <RCTBridgeModule, GMSNavigatorListener, GMSRoadSnappedLocationProviderListener, INavigationCallback>
 
+typedef void (^NavigationSessionReadyCallback)(void);
+
 @property BOOL enableUpdateInfo;
 
 - (BOOL)hasSession;
 - (GMSNavigationSession *)getSession;
++ (void)registerNavigationSessionReadyCallback:(NavigationSessionReadyCallback)callback;
 
 // Class method to access the singleton instance
 + (instancetype)sharedInstance;

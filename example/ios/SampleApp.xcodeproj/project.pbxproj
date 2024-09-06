@@ -9,23 +9,23 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* SampleAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SampleAppTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-SampleApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-SampleApp.a */; };
-		13B07FBC1A68108700A75B9A /* AppDelegateCarPlay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegateCarPlay.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2A20E8122C8994DB00DB7ADA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2A20E8142C8994DB00DB7ADA /* libPods-SampleApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-SampleApp.a */; };
-		2A20E8252C89987100DB7ADA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A20E8242C89987100DB7ADA /* AppDelegate.m */; };
 		2A20E8282C899A1400DB7ADA /* Info-CarPlay.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info-CarPlay.plist */; };
 		2AB8C27A2C89A07000250560 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52D4271C2C81D3F300C7FB36 /* Keys.plist */; };
 		2AB8C27E2C89A0B400250560 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		2AB8C27F2C89A0C800250560 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		2AB8C2802C89A0E100250560 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E049A7A79160D0D74CDA8CD1 /* PrivacyInfo.xcprivacy */; };
-		2AEB719A2C7C7B7A002224A5 /* CarSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AEB71992C7C7B7A002224A5 /* CarSceneDelegate.m */; };
-		2AEB719C2C7C7BAA002224A5 /* PhoneSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AEB719B2C7C7BAA002224A5 /* PhoneSceneDelegate.m */; };
+		5205C1232C8B314F00D0FC6B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5205C1212C8B314F00D0FC6B /* AppDelegate.m */; };
+		52206E7F2C8B2F9E00B34D22 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 52206E7E2C8B2F9E00B34D22 /* PrivacyInfo.xcprivacy */; };
+		52206E802C8B2F9E00B34D22 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 52206E7E2C8B2F9E00B34D22 /* PrivacyInfo.xcprivacy */; };
+		52206E852C8B2FEC00B34D22 /* CarSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 52206E812C8B2FEC00B34D22 /* CarSceneDelegate.m */; };
+		52206E862C8B2FEC00B34D22 /* PhoneSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 52206E822C8B2FEC00B34D22 /* PhoneSceneDelegate.m */; };
+		52206E892C8B303700B34D22 /* AppDelegateCarPlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 52206E882C8B303700B34D22 /* AppDelegateCarPlay.m */; };
 		52D4271D2C81D3F300C7FB36 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52D4271C2C81D3F300C7FB36 /* Keys.plist */; };
 		7699B88040F8A987B510C191 /* libPods-SampleApp-SampleAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-SampleApp-SampleAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		E72EC806AB287A94E8141AD5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E049A7A79160D0D74CDA8CD1 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,30 +43,29 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* SampleAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleAppTests.m; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegateCarPlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegateCarPlay.h; path = SampleApp/AppDelegateCarPlay.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegateCarPlay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegateCarPlay.mm; path = SampleApp/AppDelegateCarPlay.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SampleApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info-CarPlay.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Info-CarPlay.plist"; path = "SampleApp/Info-CarPlay.plist"; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SampleApp/main.m; sourceTree = "<group>"; };
-		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = SampleApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-SampleApp-SampleAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SampleApp-SampleAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A20E8202C8994DB00DB7ADA /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2A20E8232C89985100DB7ADA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		2A20E8242C89987100DB7ADA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2AB8C27C2C89A09D00250560 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SampleApp/Info.plist; sourceTree = "<group>"; };
-		2AEB71972C7C7B2B002224A5 /* CarSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CarSceneDelegate.h; sourceTree = "<group>"; };
-		2AEB71982C7C7B4A002224A5 /* PhoneSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhoneSceneDelegate.h; sourceTree = "<group>"; };
-		2AEB71992C7C7B7A002224A5 /* CarSceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarSceneDelegate.m; sourceTree = "<group>"; };
-		2AEB719B2C7C7BAA002224A5 /* PhoneSceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhoneSceneDelegate.m; sourceTree = "<group>"; };
 		2AEB719D2C7C80F9002224A5 /* SampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = SampleApp.entitlements; path = SampleApp/SampleApp.entitlements; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-SampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleApp.debug.xcconfig"; path = "Target Support Files/Pods-SampleApp/Pods-SampleApp.debug.xcconfig"; sourceTree = "<group>"; };
+		5205C1212C8B314F00D0FC6B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = SampleApp/AppDelegate.m; sourceTree = "<group>"; };
+		5205C1222C8B314F00D0FC6B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = SampleApp/AppDelegate.h; sourceTree = "<group>"; };
+		52206E7E2C8B2F9E00B34D22 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = SampleApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		52206E812C8B2FEC00B34D22 /* CarSceneDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CarSceneDelegate.m; path = SampleApp/CarSceneDelegate.m; sourceTree = "<group>"; };
+		52206E822C8B2FEC00B34D22 /* PhoneSceneDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhoneSceneDelegate.m; path = SampleApp/PhoneSceneDelegate.m; sourceTree = "<group>"; };
+		52206E832C8B2FEC00B34D22 /* CarSceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CarSceneDelegate.h; path = SampleApp/CarSceneDelegate.h; sourceTree = "<group>"; };
+		52206E842C8B2FEC00B34D22 /* PhoneSceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhoneSceneDelegate.h; path = SampleApp/PhoneSceneDelegate.h; sourceTree = "<group>"; };
+		52206E872C8B303700B34D22 /* AppDelegateCarPlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegateCarPlay.h; path = SampleApp/AppDelegateCarPlay.h; sourceTree = "<group>"; };
+		52206E882C8B303700B34D22 /* AppDelegateCarPlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegateCarPlay.m; path = SampleApp/AppDelegateCarPlay.m; sourceTree = "<group>"; };
 		52D4271C2C81D3F300C7FB36 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Keys.plist; path = SampleApp/Keys.plist; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-SampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleApp.release.xcconfig"; path = "Target Support Files/Pods-SampleApp/Pods-SampleApp.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-SampleApp-SampleAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleApp-SampleAppTests.debug.xcconfig"; path = "Target Support Files/Pods-SampleApp-SampleAppTests/Pods-SampleApp-SampleAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-SampleApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SampleApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SampleApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-SampleApp-SampleAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleApp-SampleAppTests.release.xcconfig"; path = "Target Support Files/Pods-SampleApp-SampleAppTests/Pods-SampleApp-SampleAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		E049A7A79160D0D74CDA8CD1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = SampleApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -118,23 +117,22 @@
 		13B07FAE1A68108700A75B9A /* SampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				5205C1222C8B314F00D0FC6B /* AppDelegate.h */,
+				5205C1212C8B314F00D0FC6B /* AppDelegate.m */,
+				52206E872C8B303700B34D22 /* AppDelegateCarPlay.h */,
+				52206E882C8B303700B34D22 /* AppDelegateCarPlay.m */,
 				2AEB719D2C7C80F9002224A5 /* SampleApp.entitlements */,
-				2A20E8232C89985100DB7ADA /* AppDelegate.h */,
-				2A20E8242C89987100DB7ADA /* AppDelegate.m */,
-				13B07FAF1A68108700A75B9A /* AppDelegateCarPlay.h */,
-				13B07FB01A68108700A75B9A /* AppDelegateCarPlay.mm */,
+				13B07FB71A68108700A75B9A /* main.m */,
+				52206E832C8B2FEC00B34D22 /* CarSceneDelegate.h */,
+				52206E812C8B2FEC00B34D22 /* CarSceneDelegate.m */,
+				52206E842C8B2FEC00B34D22 /* PhoneSceneDelegate.h */,
+				52206E822C8B2FEC00B34D22 /* PhoneSceneDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info-CarPlay.plist */,
 				2AB8C27C2C89A09D00250560 /* Info.plist */,
 				52D4271C2C81D3F300C7FB36 /* Keys.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
-				13B07FB71A68108700A75B9A /* main.m */,
-				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
-				E049A7A79160D0D74CDA8CD1 /* PrivacyInfo.xcprivacy */,
-				2AEB71972C7C7B2B002224A5 /* CarSceneDelegate.h */,
-				2AEB71992C7C7B7A002224A5 /* CarSceneDelegate.m */,
-				2AEB71982C7C7B4A002224A5 /* PhoneSceneDelegate.h */,
-				2AEB719B2C7C7BAA002224A5 /* PhoneSceneDelegate.m */,
+				52206E7E2C8B2F9E00B34D22 /* PrivacyInfo.xcprivacy */,
 			);
 			name = SampleApp;
 			sourceTree = "<group>";
@@ -310,8 +308,8 @@
 				52D4271D2C81D3F300C7FB36 /* Keys.plist in Resources */,
 				2A20E8282C899A1400DB7ADA /* Info-CarPlay.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				52206E802C8B2F9E00B34D22 /* PrivacyInfo.xcprivacy in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				E72EC806AB287A94E8141AD5 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,9 +317,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AB8C2802C89A0E100250560 /* PrivacyInfo.xcprivacy in Resources */,
 				2AB8C27F2C89A0C800250560 /* Images.xcassets in Resources */,
 				2AB8C27E2C89A0B400250560 /* LaunchScreen.storyboard in Resources */,
+				52206E7F2C8B2F9E00B34D22 /* PrivacyInfo.xcprivacy in Resources */,
 				2AB8C27A2C89A07000250560 /* Keys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -544,9 +542,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBC1A68108700A75B9A /* AppDelegateCarPlay.mm in Sources */,
-				2AEB719A2C7C7B7A002224A5 /* CarSceneDelegate.m in Sources */,
-				2AEB719C2C7C7BAA002224A5 /* PhoneSceneDelegate.m in Sources */,
+				52206E852C8B2FEC00B34D22 /* CarSceneDelegate.m in Sources */,
+				52206E892C8B303700B34D22 /* AppDelegateCarPlay.m in Sources */,
+				52206E862C8B2FEC00B34D22 /* PhoneSceneDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -555,7 +553,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A20E8252C89987100DB7ADA /* AppDelegate.m in Sources */,
+				5205C1232C8B314F00D0FC6B /* AppDelegate.m in Sources */,
 				2A20E8122C8994DB00DB7ADA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

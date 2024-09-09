@@ -390,7 +390,6 @@ RCT_EXPORT_METHOD(isAutoScreenAvailable
 }
 
 - (void)onScreenStateChange:(BOOL)available {
-  NSMutableDictionary *map = [NSMutableDictionary dictionary];
   [self sendCommandToReactNative:@"onAutoScreenStateChanged"
                             args:[NSNumber numberWithBool:available]];
 }

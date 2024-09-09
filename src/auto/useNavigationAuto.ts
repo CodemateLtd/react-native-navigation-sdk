@@ -45,7 +45,7 @@ export const useNavigationAuto = (): {
   const moduleListenersHandler = useModuleListeners<NavigationAutoCallbacks>(
     NavAutoEventDispatcher,
     androidBridge,
-    ['onAutoScreenStateChanged', 'onCustomNavigationAutoEvent']
+    ['onAutoScreenAvailabilityChanged', 'onCustomNavigationAutoEvent']
   );
 
   const mapViewAutoController = useMemo(

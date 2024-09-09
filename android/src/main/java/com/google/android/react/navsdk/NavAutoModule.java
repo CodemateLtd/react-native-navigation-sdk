@@ -516,7 +516,7 @@ public class NavAutoModule extends ReactContextBaseJavaModule implements INaviga
     WritableNativeArray params = new WritableNativeArray();
     params.pushBoolean(available);
 
-    sendCommandToReactNative( "onAutoScreenStateChanged", params);
+    sendCommandToReactNative( "onAutoScreenAvailabilityChanged", params);
   }
 
   @Override

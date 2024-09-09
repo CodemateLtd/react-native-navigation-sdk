@@ -34,7 +34,7 @@ RCT_EXPORT_MODULE(NavAutoEventDispatcher);
 - (NSArray<NSString *> *)supportedEvents {
   return @[
     @"onCustomNavigationAutoEvent",
-    @"onAutoScreenStateChanged",
+    @"onAutoScreenAvailabilityChanged",
   ];
 }
 

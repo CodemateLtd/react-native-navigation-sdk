@@ -21,7 +21,7 @@ export interface NavigationAutoCallbacks {
   /**
    * Callback function invoked when the screen availability changes.
    */
-  onAutoScreenStateChanged?(available: boolean): void;
+  onAutoScreenAvailabilityChanged?(available: boolean): void;
 
   /**
    * Callback function invoked when a custom navigation auto event is received.

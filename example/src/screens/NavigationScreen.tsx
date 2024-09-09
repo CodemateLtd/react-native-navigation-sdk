@@ -247,8 +247,8 @@ const NavigationScreen = () => {
       onCustomNavigationAutoEvent: (event: CustomNavigationAutoEvent) => {
         console.log('onCustomNavigationAutoEvent:', event);
       },
-      onAutoScreenStateChanged: (available: boolean) => {
-        console.log('onAutoScreenStateChanged:', available);
+      onAutoScreenAvailabilityChanged: (available: boolean) => {
+        console.log('onAutoScreenAvailabilityChanged:', available);
         setMapViewAutoAvailable(available);
       },
     }),

@@ -390,7 +390,7 @@ RCT_EXPORT_METHOD(isAutoScreenAvailable
 }
 
 - (void)onScreenStateChange:(BOOL)available {
-  [self sendCommandToReactNative:@"onAutoScreenStateChanged"
+  [self sendCommandToReactNative:@"onAutoScreenAvailabilityChanged"
                             args:[NSNumber numberWithBool:available]];
 }
 

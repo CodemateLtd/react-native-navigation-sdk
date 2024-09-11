@@ -73,7 +73,8 @@ RCT_EXPORT_VIEW_PROPERTY(onGroundOverlayClick, RCTDirectEventBlock);
 
 RCT_EXPORT_METHOD(createFragment
                   : (nonnull NSNumber *)reactTag stylingOptions
-                  : (NSDictionary *)stylingOptions) {
+                  : (NSDictionary *)stylingOptions isNavigationEnabled
+                  : (BOOL)isNavigationEnabled) {
   [self.bridge.uiManager
       addUIBlock:^(RCTUIManager *uiManager,
                    NSDictionary<NSNumber *, UIView *> *viewRegistry) {
@@ -84,7 +85,7 @@ RCT_EXPORT_METHOD(createFragment
         }
 
         NavViewController *viewController =
-            [view initializeViewControllerWithStylingOptions:stylingOptions];
+            [view initializeViewControllerWithStylingOptions:stylingOptions isNavigationEnabled:isNavigationEnabled];
 
         [self registerViewController:viewController forTag:reactTag];
       }];

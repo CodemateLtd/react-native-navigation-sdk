@@ -165,10 +165,6 @@ public class NavViewFragment extends SupportNavigationFragment implements IViewF
     });
   }
 
-  public boolean isNavigationSupportedOnMap() {
-    return true;
-  }
-
   public void applyStylingOptions() {
     if (mStylingOptions != null) {
       super.setStylingOptions(mStylingOptions);

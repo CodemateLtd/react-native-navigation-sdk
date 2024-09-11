@@ -33,6 +33,7 @@ import com.facebook.react.uimanager.events.EventDispatcher;
 import com.facebook.react.uimanager.events.Event;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -49,9 +50,7 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.libraries.navigation.NavigationView;
 import com.google.android.libraries.navigation.StylingOptions;
-import com.google.android.libraries.navigation.SupportNavigationFragment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -65,11 +64,12 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 
 /**
- * A fragment that displays a navigation view with a Google Map using SupportNavigationFragment.
+ * A fragment that displays a view with a Google Map using MapFragment.
  * This fragment's lifecycle is managed by NavViewManager.
  */
-public class NavViewFragment extends SupportNavigationFragment implements IViewFragment {
-  private static final String TAG = "NavViewFragment";
+@SuppressLint("ValidFragment")
+public class MapViewFragment extends MapFragment implements IViewFragment {
+  private static final String TAG = "MapViewFragment";
   private GoogleMap mGoogleMap;
   private StylingOptions mStylingOptions;
 
@@ -81,16 +81,9 @@ public class NavViewFragment extends SupportNavigationFragment implements IViewF
   private int viewTag; // React native view tag.
   private ReactApplicationContext reactContext;
 
-  public NavViewFragment(ReactApplicationContext reactContext, int viewTag) {
+  public MapViewFragment(ReactApplicationContext reactContext, int viewTag) {
     this.reactContext = reactContext;
     this.viewTag = viewTag;
-  }
-
-  private NavigationView.OnRecenterButtonClickedListener onRecenterButtonClickedListener = new NavigationView.OnRecenterButtonClickedListener() {
-    @Override
-    public void onRecenterButtonClick() {
-      emitEvent("onRecenterButtonClick", null);
-    }
   };
 
   private String style = "";
@@ -100,15 +93,11 @@ public class NavViewFragment extends SupportNavigationFragment implements IViewF
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    setNavigationUiEnabled(NavModule.getInstance().getNavigator() != null);
-
     getMapAsync(new OnMapReadyCallback() {
       public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
 
         emitEvent("onMapReady", null);
-
-        setNavigationUiEnabled(NavModule.getInstance().getNavigator() != null);
 
         mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
           @Override
@@ -157,27 +146,15 @@ public class NavViewFragment extends SupportNavigationFragment implements IViewF
         });
       }
     });
-
-    Executors.newSingleThreadExecutor().execute(() -> {
-      requireActivity().runOnUiThread((Runnable) () -> {
-        super.addOnRecenterButtonClickedListener(onRecenterButtonClickedListener);
-      });
-    });
   }
 
   public boolean isNavigationSupportedOnMap() {
-    return true;
+    return false;
   }
 
-  public void applyStylingOptions() {
-    if (mStylingOptions != null) {
-      super.setStylingOptions(mStylingOptions);
-    }
-  }
+  public void applyStylingOptions() {}
 
-  public void setStylingOptions(Map stylingOptions) {
-    mStylingOptions = new StylingOptionsBuilder.Builder(stylingOptions).build();
-  }
+  public void setStylingOptions(Map stylingOptions) {}
 
   @SuppressLint("MissingPermission")
   public void setFollowingPerspective(int jsValue) {
@@ -188,9 +165,7 @@ public class NavViewFragment extends SupportNavigationFragment implements IViewF
     mGoogleMap.followMyLocation(EnumTranslationUtil.getCameraPerspectiveFromJsValue(jsValue));
   }
 
-  public void setNightModeOption(int jsValue) {
-    super.setForceNightMode(EnumTranslationUtil.getForceNightModeFromJsValue(jsValue));
-  }
+  public void setNightModeOption(int jsValue) {}
 
   public void setMapType(int jsValue) {
     if (mGoogleMap == null) {
@@ -224,17 +199,17 @@ public class NavViewFragment extends SupportNavigationFragment implements IViewF
       int animationDuration = CollectionUtil.getInt("duration", map, 0);
 
       CameraPosition cameraPosition =
-          new CameraPosition.Builder()
-              .target(
-                  ObjectTranslationUtil.getLatLngFromMap(
-                      (Map) map.get("target"))) // Set the target location
-              .zoom(zoom) // Set the desired zoom level
-              .tilt(tilt) // Set the desired tilt angle (0 for straight down, 90 for straight up)
-              .bearing(bearing) // Set the desired bearing (rotation angle in degrees)
-              .build();
+        new CameraPosition.Builder()
+          .target(
+            ObjectTranslationUtil.getLatLngFromMap(
+              (Map) map.get("target"))) // Set the target location
+          .zoom(zoom) // Set the desired zoom level
+          .tilt(tilt) // Set the desired tilt angle (0 for straight down, 90 for straight up)
+          .bearing(bearing) // Set the desired bearing (rotation angle in degrees)
+          .build();
 
       mGoogleMap.animateCamera(
-          CameraUpdateFactory.newCameraPosition(cameraPosition), animationDuration, null);
+        CameraUpdateFactory.newCameraPosition(cameraPosition), animationDuration, null);
     }
   }
 
@@ -512,7 +487,7 @@ public class NavViewFragment extends SupportNavigationFragment implements IViewF
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
-      requireActivity().runOnUiThread((Runnable) () -> {
+      getActivity().runOnUiThread((Runnable) () -> {
         MapStyleOptions options = new MapStyleOptions(style);
         mGoogleMap.setMapStyle(options);
       });
@@ -627,9 +602,9 @@ public class NavViewFragment extends SupportNavigationFragment implements IViewF
   public void setMyLocationEnabled(boolean isOn) {
     if (mGoogleMap != null) {
       if (ActivityCompat.checkSelfPermission(getActivity(), permission.ACCESS_FINE_LOCATION)
-              == PackageManager.PERMISSION_GRANTED
-          && ActivityCompat.checkSelfPermission(getActivity(), permission.ACCESS_COARSE_LOCATION)
-              == PackageManager.PERMISSION_GRANTED) {
+        == PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(getActivity(), permission.ACCESS_COARSE_LOCATION)
+        == PackageManager.PERMISSION_GRANTED) {
         mGoogleMap.setMyLocationEnabled(isOn);
       }
     }
@@ -666,14 +641,6 @@ public class NavViewFragment extends SupportNavigationFragment implements IViewF
     cleanup();
   }
 
-  public GoogleMap getGoogleMap() {
-    return mGoogleMap;
-  }
-
-  private void cleanup() {
-    removeOnRecenterButtonClickedListener(onRecenterButtonClickedListener);
-  }
-
   private void emitEvent(String eventName, @Nullable WritableMap data) {
     if (reactContext != null) {
       EventDispatcher dispatcher = UIManagerHelper.getEventDispatcherForReactTag(reactContext, viewTag);
@@ -684,6 +651,31 @@ public class NavViewFragment extends SupportNavigationFragment implements IViewF
       }
     }
   }
+
+  public GoogleMap getGoogleMap() {
+    return mGoogleMap;
+  }
+
+  // Navigation related function of the IViewFragment interface. Not used in this class.
+  public void setNavigationUiEnabled(boolean enableNavigationUi) {}
+
+  public void setTripProgressBarEnabled(boolean enabled) {}
+
+  public void setSpeedometerEnabled(boolean enabled) {}
+
+  public void setSpeedLimitIconEnabled(boolean enabled) {}
+
+  public void setTrafficIncidentCardsEnabled(boolean enabled) {}
+
+  public void setEtaCardEnabled(boolean enabled) {}
+
+  public void setHeaderEnabled(boolean enabled) {}
+
+  public void setRecenterButtonEnabled(boolean enabled) {}
+
+  public void showRouteOverview() {}
+
+  private void cleanup() {}
 
   public class NavViewEvent extends Event<NavViewEvent> {
     private String eventName;
